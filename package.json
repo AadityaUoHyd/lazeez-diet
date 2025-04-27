@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "postinstall": "npm install --prefix client", 
-  "build": "npm run build --prefix client && tsc",
-  "dev": "nodemon server/index.ts",
-  "start": "node server/index.js"
+    "postinstall": "npm install --prefix client", 
+    "build": "npm run build --prefix client && tsc",
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.ts"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
