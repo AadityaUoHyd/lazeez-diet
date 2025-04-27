@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cd client && npm install && npm run build",
-    "build": "tsc",
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.ts"
+  "dev": "nodemon server/index.ts",
+  "build": "tsc",
+  "start": "node server/index.js",
+  "postinstall": "rm -rf client/node_modules && cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
