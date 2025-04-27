@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server/index.ts",
-    "stripe": "stripe listen --forward-to localhost:8000/api/v1/order/webhook",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client && tsc",
-    "start": "node server/index.ts"
+  "postinstall": "npm install --prefix client", 
+  "build": "npm run build --prefix client && tsc",
+  "dev": "nodemon server/index.ts",
+  "start": "node server/index.js"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
