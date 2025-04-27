@@ -5,7 +5,7 @@ import crypto from "crypto";
 import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
-import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
+import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from "../utils/emailService";
 
 export const signup = async (req: Request, res: Response) => {
     try {
@@ -21,7 +21,6 @@ export const signup = async (req: Request, res: Response) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken =  generateVerificationCode();
 
-        console.log("Creating user...");
         user = await User.create({
             fullname,
             email,
@@ -31,14 +30,9 @@ export const signup = async (req: Request, res: Response) => {
             verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
         })
 
-        console.log("Generating token...");
         generateToken(res,user);
 
-        console.log("Sending email...");
         await sendVerificationEmail(email, verificationToken);
-
-        console.log("All good till here!");
-
 
         const userWithoutPassword = await User.findOne({ email }).select("-password");
         return res.status(201).json({
@@ -146,7 +140,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
         await user.save();
 
         // send email
-        await sendPasswordResetEmail(user.email, `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
+        await sendPasswordResetEmail(user.email, `${process.env.FRONTEND_URL}/reset-password/${resetToken}`);
 
         return res.status(200).json({
             success: true,

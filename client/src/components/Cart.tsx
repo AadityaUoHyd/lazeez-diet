@@ -13,21 +13,30 @@ import {
 import { useState } from "react";
 import CheckoutConfirmPage from "./CheckoutConfirmPage";
 import { useCartStore } from "@/store/useCartStore";
+import { useUserStore } from "@/store/useUserStore";
 import { CartItem } from "@/types/cartType";
+import cartImage from "@/assets/cartImage.png";
 
 const Cart = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const { cart, decrementQuantity, incrementQuantity, clearCart, removeFromTheCart } = useCartStore();
+  const { user } = useUserStore();
+  const isAdmin = user?.admin || false;
 
   let totalAmount = cart.reduce((acc, ele) => {
     return acc + ele.price * ele.quantity;
   }, 0);
+
   return (
     <div className="flex flex-col max-w-7xl mx-auto my-10">
-      <div className="flex justify-end">
-        <Button variant="link" onClick={() => clearCart()} className="hover:bg-red-500">Clear All</Button>
+      <div className="flex justify-left mb-8">
+        <img
+          src={cartImage}
+          alt="Lazeez Diet contact image"
+          className="w-400 h-auto rounded-xl"
+        />
       </div>
-      
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -41,26 +50,26 @@ const Cart = () => {
         </TableHeader>
         <TableBody>
           {cart.map((item: CartItem) => (
-            <TableRow>
+            <TableRow key={item._id}>
               <TableCell>
                 <Avatar>
                   <AvatarImage src={item.image} alt="" />
-                    <AvatarFallback>
+                  <AvatarFallback>
                     <div className="w-full h-full bg-gray-300 rounded-full shadow-md flex items-center justify-center">
                       <User />
                     </div>
-                    </AvatarFallback>
+                  </AvatarFallback>
                 </Avatar>
               </TableCell>
-              <TableCell> {item.name}</TableCell>
-              <TableCell> {item.price}</TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.price}</TableCell>
               <TableCell>
-                <div className="w-fit flex items-center rounded-full border border-gray-100 dark:border-gray-800 shadow-md">
+                <div className="w-fit flex items-center rounded-full border border-gray-200 dark:border-gray-800 shadow-md">
                   <Button
-                  onClick={() => decrementQuantity(item._id)}
+                    onClick={() => decrementQuantity(item._id)}
                     size={"icon"}
                     variant={"outline"}
-                    className="rounded-full bg-gray-200"
+                    className="rounded-full bg-gray-200 hover:bg-red-500"
                   >
                     <Minus />
                   </Button>
@@ -73,9 +82,9 @@ const Cart = () => {
                     {item.quantity}
                   </Button>
                   <Button
-                  onClick={() => incrementQuantity(item._id)}
+                    onClick={() => incrementQuantity(item._id)}
                     size={"icon"}
-                    className="rounded-full bg-purple-500 hover:bg-hoverPurple"
+                    className="rounded-full bg-purple-500 hover:bg-green-500"
                     variant={"outline"}
                   >
                     <Plus />
@@ -84,7 +93,11 @@ const Cart = () => {
               </TableCell>
               <TableCell>{item.price * item.quantity}</TableCell>
               <TableCell className="text-right">
-                <Button size={"sm"} className="bg-purple-500 hover:bg-red-500" onClick={() => removeFromTheCart(item._id)}>
+                <Button
+                  size={"sm"}
+                  className="bg-purple-500 hover:bg-red-500"
+                  onClick={() => removeFromTheCart(item._id)}
+                >
                   Remove
                 </Button>
               </TableCell>
@@ -98,10 +111,18 @@ const Cart = () => {
           </TableRow>
         </TableFooter>
       </Table>
-      <div className="flex justify-end my-5">
+      <div className="flex items-left justify-end mb-5 my-5 gap-2">
+        <Button onClick={() => clearCart()} className="bg-purple-500 hover:bg-red-500">
+          Clear All Order
+        </Button>
+
         <Button
+          variant="link"
           onClick={() => setOpen(true)}
-          className="bg-purple-500 hover:bg-hoverPurple"
+          className={`bg-purple-500 hover:bg-green-500 mx-4 ${
+            isAdmin ? "opacity-60 cursor-not-allowed" : ""
+          }`}
+          disabled={isAdmin}
         >
           Proceed To Checkout
         </Button>

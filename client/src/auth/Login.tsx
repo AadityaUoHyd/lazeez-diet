@@ -6,7 +6,7 @@ import { useUserStore } from "@/store/useUserStore";
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/lazeezdiet.png";
+import logo from "@/assets/lazeezdiet.png";
 
 
 const Login = () => {

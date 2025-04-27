@@ -45,7 +45,8 @@ import { Separator } from "./ui/separator";
 import { useUserStore } from "@/store/useUserStore";
 import { useCartStore } from "@/store/useCartStore";
 import { useThemeStore } from "@/store/useThemeStore";
-import logo from "../assets/lazeezDiet.png";
+import { useNavigate } from "react-router-dom";
+import logo from "@/assets/lazeezDiet.png";
 
 const linkStyles = "flex items-center gap-1 hover:text-purple-500 transition-colors";
 const activeStyles = "text-blue-600 underline";
@@ -54,9 +55,17 @@ const Navbar = () => {
   const { user, logout } = useUserStore();
   const { cart } = useCartStore();
   const { setTheme } = useThemeStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(() => {
+      navigate("/login");
+    });
+  };
+  
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto p-2">
       <div className="flex items-center justify-between h-14">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -87,20 +96,20 @@ const Navbar = () => {
             </NavLink>
 
             {/* Cart */}
-          <NavLink
-            to="/cart"
-            className={({ isActive }) =>
-              `relative flex items-center gap-1 ${isActive ? activeStyles : linkStyles}`
-            }
-          >
-            <ShoppingCart size={20} />
-            <span className="text-sm">({cart.length})</span>
-          </NavLink>
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `relative flex items-center gap-1 ${isActive ? activeStyles : linkStyles}`
+              }
+            >
+              <ShoppingCart size={20} />
+              <span className="text-sm">({cart.length})</span>
+            </NavLink>
 
             {user?.admin && (
               <Menubar>
                 <MenubarMenu>
-                  <MenubarTrigger className="cursor-pointer text-purple-500">Admin Panel</MenubarTrigger>
+                  <MenubarTrigger className="cursor-pointer bg-purple-500 hover:bg-hoverPurple text-white">Admin Panel</MenubarTrigger>
                   <MenubarContent>
                     <Link to="/admin/restaurant">
                       <MenubarItem>Restaurant</MenubarItem>
@@ -117,10 +126,10 @@ const Navbar = () => {
             )}
           </div>
 
-          
+
 
           {/* Avatar Dropdown - only show if user is logged in */}
-          {user && (
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="cursor-pointer">
@@ -147,13 +156,26 @@ const Navbar = () => {
                   Dark Mode
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout} className="text-red-600 cursor-pointer">
+                <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
                   <LogOut size={16} className="mr-2 text-red-600" />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-1.5 rounded-md transition-all text-sm font-medium border border-purple-500 
+     ${isActive ? "bg-purple-500 text-white" : "text-purple-600 hover:bg-purple-100"}`
+              }
+            >
+              <User size={16} />
+              Login
+            </NavLink>
+
           )}
+
         </div>
 
         {/* Mobile Nav */}
@@ -233,7 +255,7 @@ const MobileNavbar = () => {
                   Please wait
                 </Button>
               ) : (
-                <Button onClick={logout} className="bg-purple-500 hover:bg-hoverPurple">
+                <Button onClick={() => logout()} className="bg-purple-500 hover:bg-hoverPurple">
                   Logout
                 </Button>
               )}
@@ -249,8 +271,7 @@ const MobileLink = ({ to, icon, text }: { to: string; icon: React.ReactNode; tex
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex items-center gap-2 px-2 py-1 rounded-md ${
-        isActive ? "text-blue-600 underline" : "hover:text-purple-500"
+      `flex items-center gap-2 px-2 py-1 rounded-md ${isActive ? "text-blue-600 underline" : "hover:text-purple-500"
       }`
     }
   >

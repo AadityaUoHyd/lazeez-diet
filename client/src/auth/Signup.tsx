@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/lazeezdiet.png"; // ✅ Import the logo
+import logo from "@/assets/lazeezdiet.png"; 
 
 const Signup = () => {
   const [input, setInput] = useState<SignupInputState>({

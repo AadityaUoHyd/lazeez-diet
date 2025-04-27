@@ -1,4 +1,5 @@
-import logo from "../assets/lazeezdiet.png";
+import logo from "@/assets/lazeezdiet.png";
+import about from "@/assets/about.png";
 import {
   LucideUtensils,
   LucideUtensilsCrossed,
@@ -12,7 +13,7 @@ import {
 const About = () => {
   return (
     <div className="min-h-screen px-6 py-12 sm:px-12 md:px-20 lg:px-32">
-      <div className="max-w-4xl mx-auto bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-md dark:shadow-gray-700">
+      <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-md dark:shadow-gray-700">
 
 
 
@@ -22,7 +23,7 @@ const About = () => {
             About Lazeez Diet
           </h1>
         </div>
-
+        
         <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
           Lazeez Diet is your all-in-one online food ordering app that combines health and flavor in one platform. Whether you're looking for a calorie-conscious salad, a keto-friendly wrap, or a full traditional Indian thali, we deliver it fresh and fast — right to your doorstep.
         </p>
@@ -79,6 +80,14 @@ const About = () => {
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
             Why Choose Lazeez Diet?
           </h2>
+          {/* Main Image - Prominently Centered */}
+        <div className="flex justify-left mb-8">
+          <img
+            src={about}
+            alt="Lazeez Diet about image"
+            className="w-400 h-auto rounded-xl"
+          />
+        </div>
           <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
             <li>🍲 Curated healthy meals for all diet types</li>
             <li>🚀 Fast & hygienic delivery</li>

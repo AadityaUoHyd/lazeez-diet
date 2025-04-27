@@ -1,9 +1,10 @@
 import { LucidePhone, LucideMail, LucideMapPin } from "lucide-react";
-import logo from "../assets/lazeezdiet.png";
+import logo from "@/assets/lazeezdiet.png";
+import contact from "@/assets/contact.png";
 
 const Contact = () => (
   <div className="min-h-screen px-6 py-12 sm:px-12 md:px-20 lg:px-32">
-    <div className="max-w-4xl mx-auto bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-md dark:shadow-gray-700">
+    <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-md dark:shadow-gray-700">
       <div className="flex items-center justify-center gap-3 mb-6">
         <LucideMail className="text-purple-600 dark:text-purple-400 w-8 h-8" />
         <h1 className="text-3xl font-bold text-purple-500">Contact Us</h1>
@@ -55,6 +56,14 @@ const Contact = () => (
           </p>
         </div>
       </div>
+
+      <div className="flex justify-left mb-8">
+          <img
+            src={contact}
+            alt="Lazeez Diet contact image"
+            className="w-400 h-auto rounded-xl"
+          />
+        </div>
 
       <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-gray-700">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Send us a message for feedback</h2>

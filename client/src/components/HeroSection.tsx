@@ -14,6 +14,8 @@ import LazeezDiet6 from "@/assets/lazeezdiet6.png";
 import LazeezDiet7 from "@/assets/lazeezdiet7.png";
 import LazeezDiet8 from "@/assets/lazeezdiet8.png";
 import LazeezDiet9 from "@/assets/lazeezdiet9.png";
+import LazeezDiet10 from "@/assets/lazeezdiet10.png";
+import LazeezDiet11 from "@/assets/lazeezdiet11.png";
 
 const imageList = [
   LazeezDiet1,
@@ -25,6 +27,8 @@ const imageList = [
   LazeezDiet7,
   LazeezDiet8,
   LazeezDiet9,
+  LazeezDiet10,
+  LazeezDiet11,
 ];
 
 const HeroSection = () => {
@@ -61,75 +65,79 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-7xl mx-auto pt-4 pb-10 px-4 space-y-10">
-      {/* Image carousel */}
-      <div
-        className="relative w-full h-[450px] md:h-[500px] overflow-hidden rounded-xl"
+    <>
+      {/* First Page: Image Slider */}
+      <section
+        className="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {prevIndex !== -1 && (
-          <img
-            src={imageList[prevIndex]}
-            key={prevIndex}
-            className="absolute w-full h-full object-contain z-10 transition-transform duration-1000 ease-in-out"
-            style={{ transform: "translateX(-100%)" }}
-            alt="Previous"
-          />
-        )}
-        <img
-          src={imageList[currentIndex]}
-          key={currentIndex}
-          className="absolute w-full h-full object-contain z-20 transition-transform duration-1000 ease-in-out"
-          style={{ transform: "translateX(0%)" }}
-          alt="Current"
-        />
-      </div>
-
-      {/* Text and Search */}
-      <div className="text-center max-w-2xl px-4 space-y-6">
-        <h1 className="font-extrabold text-3xl md:text-5xl text-black dark:text-white leading-snug">
-          Food At Your Fingertips.<br /> Anytime, Anywhere.
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 text-lg">
-          Hey there! Craving delicious food? We’re always nearby and ready to serve you!
-        </p>
-
-        <div className="relative flex flex-col sm:flex-row gap-4 items-center justify-center w-full py-16">
-          <div className="relative w-full max-w-xl">
-            <Input
-              type="text"
-              value={searchText}
-              placeholder="Search restaurant by name, city, or country..."
-              onChange={(e) => {
-                setSearchText(e.target.value);
-                setInputError(false); // clear error while typing
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch();
-              }}
-              className={`pl-14 pr-16 py-6 text-lg rounded-lg w-full shadow-lg ${
-                inputError ? "border-2 border-red-500" : ""
-              }`}
+        <div className="relative w-full h-full max-w-[100vw] max-h-[100vh] aspect-square overflow-hidden">
+          {prevIndex !== -1 && (
+            <img
+              src={imageList[prevIndex]}
+              key={prevIndex}
+              className="absolute w-full h-full object-contain z-10 transition-transform duration-500 ease-in-out"
+              style={{ transform: "translateX(-100%)" }}
+              alt="Previous Slide"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-          </div>
-          <Button
-            onClick={handleSearch}
-            disabled={searchText.trim() === ""}
-            className="bg-purple-500 hover:bg-hoverPurple text-lg px-6 py-6 rounded-lg shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            Search
-          </Button>
+          )}
+          <img
+            src={imageList[currentIndex]}
+            key={currentIndex}
+            className="absolute w-full h-full object-contain z-20 transition-transform duration-500 ease-in-out"
+            style={{ transform: "translateX(0%)" }}
+            alt="Current Slide"
+          />
         </div>
+      </section>
 
-        {inputError && (
-          <p className="text-red-500 text-sm -mt-8">
-            Please enter something before searching.
+      {/* Second Page: Text and Search */}
+      <section className="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <div className="text-center max-w-4xl px-4 space-y-8">
+          <h1 className="font-extrabold text-4xl md:text-6xl text-black dark:text-white leading-tight">
+            Food At Your Fingertips.<br /> Anytime, Anywhere.
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 text-xl md:text-2xl">
+            Hey there! Craving delicious food? We’re always nearby and ready to serve you!
           </p>
-        )}
-      </div>
-    </div>
+
+          <div className="relative flex flex-col sm:flex-row gap-4 items-center justify-center w-full py-16">
+            <div className="relative w-full max-w-xl">
+              <Input
+                type="text"
+                value={searchText}
+                placeholder="Search restaurant by name, city, or country..."
+                onChange={(e) => {
+                  setSearchText(e.target.value);
+                  setInputError(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearch();
+                }}
+                className={`pl-14 pr-16 py-6 text-lg rounded-lg w-full shadow-lg border-2 ${
+                  inputError ? "border-red-500" : "border-gray-300 dark:border-gray-700"
+                } focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-black dark:text-white`}
+              />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            </div>
+            <Button
+              onClick={handleSearch}
+              disabled={searchText.trim() === ""}
+              className="bg-purple-500 hover:bg-hoverPurple text-white text-lg px-8 py-6 rounded-lg shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Search
+            </Button>
+          </div>
+
+          {inputError && (
+            <p className="text-red-500 text-sm -mt-8">
+              Please enter something before searching.
+            </p>
+          )}
+        </div>
+      </section>
+    </>
   );
 };
 

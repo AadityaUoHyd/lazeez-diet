@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Heart, MessageCircle, UserCircle, SendHorizonal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import communityImage from "@/assets/community.png";
 
 const mockPosts = [
   {
@@ -22,6 +23,52 @@ const mockPosts = [
     likes: 25,
     comments: 6,
   },
+  {
+      "id": 3,
+      "user": "Aman Sharma",
+      "avatar": "https://randomuser.me/api/portraits/men/45.jpg",
+      "image": "https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
+      "text": "Cheat day means double cheeseburger 🍔😍 #WorthIt",
+      "likes": 42,
+      "comments": 10
+  },
+  {
+      "id": 4,
+      "user": "Priya Mehta",
+      "avatar": "https://randomuser.me/api/portraits/women/55.jpg",
+      "image": "https://cdn.pixabay.com/photo/2016/10/25/13/42/indian-1768906_1280.jpg",
+      "text": "Breakfast goals ☕🍞 Fresh start to the day!",
+      "likes": 34,
+      "comments": 7
+  },
+  {
+      "id": 5,
+      "user": "Karan Malhotra",
+      "avatar": "https://randomuser.me/api/portraits/men/75.jpg",
+      "image": "https://cdn.pixabay.com/photo/2014/01/09/09/11/sweets-241016_1280.jpg",
+      "text": "Nothing beats home-cooked Indian food 🇮🇳🍛",
+      "likes": 58,
+      "comments": 12
+  },
+  {
+      "id": 6,
+      "user": "Sanya Verma",
+      "avatar": "https://randomuser.me/api/portraits/women/85.jpg",
+      "image": "https://cdn.pixabay.com/photo/2014/04/22/02/56/pizza-329523_1280.jpg",
+      "text": "Pizza nights are the best nights 🍕✨ #FoodieLife",
+      "likes": 76,
+      "comments": 15
+  },
+  {
+      "id": 7,
+      "user": "Arjun Desai",
+      "avatar": "https://randomuser.me/api/portraits/men/33.jpg",
+      "image": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_1280.jpg",
+      "text": "Sundays are for soul food 🥘😋 #LazySunday",
+      "likes": 29,
+      "comments": 4
+  }
+  
 ];
 
 const Community = () => {
@@ -31,7 +78,20 @@ const Community = () => {
   }, []);
 
   return (
+
+    <div className="min-h-screen px-6 py-12 sm:px-12 md:px-20 lg:px-32">
+
+<div className="flex justify-left mb-8">
+          <img
+            src={communityImage}
+            alt="Lazeez Diet profile image"
+            className="w-400 h-auto rounded-xl"
+          />
+        </div>
+        
+
     <div className="max-w-5xl mx-auto px-4 py-12">
+      
       <div className="text-center space-y-4 mb-10">
         <h1 className="text-4xl md:text-5xl font-bold text-purple-500">
           Lazeez Community ❤️‍🔥
@@ -99,6 +159,7 @@ const Community = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

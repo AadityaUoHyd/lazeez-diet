@@ -187,6 +187,10 @@ const appRouter = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
+    path: "/reset-password/:token",
+    element: <ResetPassword />,
+  },
+  {
     path: "/verify-email",
     element: <VerifyEmail />,
   },

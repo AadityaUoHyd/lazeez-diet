@@ -30,7 +30,7 @@ type UserState = {
     login: (input:LoginInputState) => Promise<void>;
     verifyEmail: (verificationCode: string) => Promise<void>;
     checkAuthentication: () => Promise<void>;
-    logout: () => Promise<void>;
+    logout: (callback?: () => void) => Promise<void>;
     forgotPassword: (email:string) => Promise<void>; 
     resetPassword: (token:string, newPassword:string) => Promise<void>; 
     updateProfile: (input:any) => Promise<void>; 
@@ -104,19 +104,21 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             set({isAuthenticated: false, isCheckingAuth: false });
         }
     },
-    logout: async () => {
+    logout: async (callback?: () => void) => {
         try {
-            set({ loading: true });
-            const response = await axios.post(`${API_END_POINT}/logout`);
-            if (response.data.success) {
-                toast.success(response.data.message);
-                set({ loading: false, user: null, isAuthenticated: false })
-            }
+          set({ loading: true });
+          const response = await axios.post(`${API_END_POINT}/logout`);
+          if (response.data.success) {
+            toast.success(response.data.message);
+            set({ loading: false, user: null, isAuthenticated: false });
+            if (callback) callback(); // Call redirect after logout
+          }
         } catch (error:any) {
-            toast.error(error.response.data.message);
-            set({ loading: false });
+          toast.error(error.response.data.message);
+          set({ loading: false });
         }
-    },
+      },
+      
     forgotPassword: async (email: string) => {
         try {
             set({ loading: true });

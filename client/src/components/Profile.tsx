@@ -13,6 +13,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { useUserStore } from "@/store/useUserStore";
+import profileImage from "@/assets/profile.png";
 
 const Profile = () => {
   const { user, updateProfile } = useUserStore();
@@ -63,6 +64,15 @@ const Profile = () => {
 
   return (
     <form onSubmit={updateProfileHandler} className="max-w-7xl mx-auto my-5 px-4">
+
+        <div className="flex justify-left mb-8">
+          <img
+            src={profileImage}
+            alt="Lazeez Diet profile image"
+            className="w-400 h-auto rounded-xl"
+          />
+        </div>
+
       {/* CENTERED CONTAINER INCLUDING AVATAR + NAME */}
       <div className="max-w-xl mx-auto flex flex-col items-center gap-4">
         <div className="relative">

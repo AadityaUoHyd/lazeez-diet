@@ -1,64 +1,57 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Mail } from "lucide-react";
-import { useState, FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-
-// 👇 import your logo
-import logo from "../assets/lazeezDiet.png"; // adjust path based on your project
+import logo from "@/assets/lazeezdiet.png";
+import { useUserStore } from "@/store/useUserStore";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const { forgotPassword, loading } = useUserStore();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      // Simulate API call
-      await new Promise((res) => setTimeout(res, 2000));
-      alert("Reset link sent to your email!");
+      await forgotPassword(email);
+      setEmail(""); // Clear input on success
     } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+      // Error is handled by useUserStore via toast
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-10 text-foreground">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md rounded-xl border border-border bg-card p-6 md:p-8 shadow-md dark:shadow-lg space-y-6"
+        className="w-full max-w-md p-8 rounded-xl border border-border bg-card shadow-md space-y-6"
       >
-        {/* 👇 Logo */}
-        <div className="flex justify-center">
+        <div className="text-center space-y-1">
           <img
             src={logo}
-            alt="Logo"
+            alt="Lazeez Diet Logo"
             className="mx-auto w-20 h-20 object-contain rounded-full"
           />
-        </div>
-
-        <div className="text-center">
           <h1 className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-            Forgot Password
+            Lazeez Diet
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Enter your email to receive a reset link
+          <p className="text-sm text-muted-foreground">
+            Forgot your password? Don’t worry.
           </p>
         </div>
 
-        <div className="relative">
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="pl-10"
-          />
-          <Mail className="absolute inset-y-2 left-2 h-5 w-5 text-muted-foreground pointer-events-none" />
+        <div className="space-y-2">
+          <div className="relative">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="pl-10"
+              disabled={loading}
+            />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+          </div>
         </div>
 
         <div>
@@ -68,26 +61,30 @@ const ForgotPassword = () => {
               className="w-full bg-purple-500 hover:bg-hoverPurple text-white"
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Please wait
+              Sending Link...
             </Button>
           ) : (
             <Button
               type="submit"
               className="w-full bg-purple-500 hover:bg-hoverPurple text-white"
+              disabled={!email.trim()}
             >
               Send Reset Link
             </Button>
           )}
         </div>
 
-        <p className="text-sm text-center text-muted-foreground">
-          Back to{" "}
+        <div className="text-center text-sm">
           <Link
             to="/login"
             className="text-purple-500 hover:text-blue-500 hover:underline"
           >
-            Login
+            Back to Login
           </Link>
+        </div>
+
+        <p className="text-center text-xs text-muted-foreground mt-4">
+          © {new Date().getFullYear()} Lazeez Diet. All rights reserved.
         </p>
       </form>
     </div>

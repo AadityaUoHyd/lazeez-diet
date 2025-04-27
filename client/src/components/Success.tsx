@@ -1,11 +1,12 @@
- 
+
 import { IndianRupee } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useOrderStore } from "@/store/useOrderStore";
-import { useEffect } from "react"; 
+import { useEffect } from "react";
 import { CartItem } from "@/types/cartType";
+import order1 from "@/assets/order1.png";
 
 const Success = () => {
   const { orders, getOrderDetails } = useOrderStore();
@@ -24,52 +25,67 @@ const Success = () => {
     );
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 px-4">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 max-w-lg w-full">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-            Order Status:{" "}
-            <span className="text-[#FF5A5A]">{"confirm".toUpperCase()}</span>
-          </h1>
-        </div>
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
-            Order Summary
-          </h2>
-          {/* Your Ordered Item Display here  */}
-          {orders.map((order:any, index:number) => (
-            <div key={index}>
-              {order.cartItems.map((item:CartItem) => (
-                <div className="mb-4">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img
-                        src={item.image}
-                        alt=""
-                        className="w-14 h-14 rounded-md object-cover"
-                      />
-                      <h3 className="ml-4 text-gray-800 dark:text-gray-200 font-medium">
-                        {item.name}
-                      </h3>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-gray-800 dark:text-gray-200 flex items-center">
-                        <IndianRupee />
-                        <span className="text-lg font-medium">{item.price}</span>
+
+    <div className="flex flex-col max-w-7xl mx-auto my-10 min-h-screen">
+
+
+      <div className="flex justify-left mb-8">
+        <img
+          src={order1}
+          alt="Lazeez Diet success image"
+          className="w-400 h-auto rounded-xl"
+        />
+      </div>
+
+
+      <div className="flex items-center justify-center">
+
+        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 max-w-lg w-full">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+              Order Status:{" "}
+              <span className="text-[#FF5A5A]">{"confirm".toUpperCase()}</span>
+            </h1>
+          </div>
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+              Order Summary
+            </h2>
+            {/* Your Ordered Item Display here  */}
+            {orders.map((order: any, index: number) => (
+              <div key={index}>
+                {order.cartItems.map((item: CartItem) => (
+                  <div className="mb-4">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <img
+                          src={item.image}
+                          alt=""
+                          className="w-14 h-14 rounded-md object-cover"
+                        />
+                        <h3 className="ml-4 text-gray-800 dark:text-gray-200 font-medium">
+                          {item.name}
+                        </h3>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-gray-800 dark:text-gray-200 flex items-center">
+                          <IndianRupee />
+                          <span className="text-lg font-medium">{item.price}</span>
+                        </div>
                       </div>
                     </div>
+                    <Separator className="my-4" />
                   </div>
-                  <Separator className="my-4" />
-                </div>
-              ))}
-            </div>
-          ))}
+                ))}
+              </div>
+            ))}
+          </div>
+          <Link to="/cart">
+            <Button className="bg-purple-500 hover:bg-hoverPurple w-full py-3 rounded-md shadow-lg">
+              Continue Shopping
+            </Button>
+          </Link>
         </div>
-        <Link to="/cart">
-          <Button className="bg-purple-500 hover:bg-hoverPurple w-full py-3 rounded-md shadow-lg">
-            Continue Shopping
-          </Button>
-        </Link>
       </div>
     </div>
   );
